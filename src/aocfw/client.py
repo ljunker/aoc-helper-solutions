@@ -138,6 +138,15 @@ class AdventOfCodeClient:
 
         return SubmissionResult(status=status, message=msg, raw_html=html)
 
+    def get_leaderboard(self, year, board_id):
+        url = f"{self.base_url}/{year}/leaderboard/private/view/{board_id}.json"
+        resp = self.session.get(url)
+        if resp.status_code != 200:
+            raise RuntimeError(
+                f"Failed to get leaderboard (HTTP {resp.status_code})."
+            )
+        return resp.json()
+
     # ---------------------------
     # Parsing
     # ---------------------------
